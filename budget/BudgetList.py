@@ -1,3 +1,4 @@
+from cmath import exp
 from . import Expense
 
 class BudgetList:
@@ -21,3 +22,15 @@ class BudgetList:
     
 def main():
     myBudgetList = BudgetList(1200)
+    
+    expenses = Expense.Expenses()
+    
+    expenses.read_expenses('data/spending_data.csv')
+    
+    for expense in expenses.list:
+        myBudgetList.append(expense.amount)
+        
+    print('The count of all expenses: ' + str(len(myBudgetList)))
+    
+if __name__ == '__main__':
+    main()
