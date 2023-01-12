@@ -20,25 +20,32 @@ class BudgetList:
     def __len__(self):
         return len(self.expenses), len(self.overages)
     
-    def main():
-        myBudgetList = BudgetList(1200)
-        
-        expenses = Expense.Expenses()
-        
-        expenses.read_expenses('data/spending_data.csv')
-        
-        for expense in expenses.list:
-            myBudgetList.append(expense.amount)
-            
-        print('The count of all expenses: ' + str(len(myBudgetList)))
-        
-    if __name__ == '__main__':
-        main()
-        
     def __iter__(self):
         self.iter_e = iter(self.expenses)
         self.iter_o = iter(self.overages)
         return self
-    
+
     def __next__(self):
-        pass
+        try:
+            return self.iter_e.__next__()
+        except StopIteration as stop:
+            return self.iter_o.__next__()
+    
+def main():
+    myBudgetList = BudgetList(1200)
+    
+    expenses = Expense.Expenses()
+    
+    expenses.read_expenses('data/spending_data.csv')
+    
+    for expense in expenses.list:
+        myBudgetList.append(expense.amount)
+        
+    print('The count of all expenses: ' + str(len(myBudgetList)))
+    
+    for entry in myBudgetList:
+        print(entry)
+    
+if __name__ == '__main__':
+    main()
+    
